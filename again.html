@@ -89,27 +89,27 @@ background-color:red;
 <p>Click on the buttons inside the tabbed menu:</p>
 
 <div class="tab">
-  <button class="tablinks" onclick="openCity(event, 'Small')">Small</button>
-  <button class="tablinks" onclick="openCity(event, 'Medium')">Medium</button>
-  <button class="tablinks" onclick="openCity(event, 'Large')">Large</button>
+  <button class="tablinks" onclick="openCity(event, 'Small')" ng-click="getSmallCap()">Small</button>
+  <button class="tablinks" onclick="openCity(event, 'Medium')" ng-click="getMidCap()">Medium</button>
+  <button class="tablinks" onclick="openCity(event, 'Large')" ng-click="getLargeCap()">Large</button>
 </div>
 
 <div id="Small" class="tabcontent">
   <h3>Small</h3>
   <p>London is the capital city of England.</p>
-<div ui-grid="gridOptions" class="myGrid" ui-grid-selection ></div>
+<div ui-grid="gridOptionsSmall" class="myGrid" ui-grid-selection ></div>
 </div>
 
 <div id="Medium" class="tabcontent">
   <h3>Medium</h3>
   <p>Paris is the capital of France.</p> 
-<div ui-grid="gridOptions" class="myGrid" ui-grid-selection ></div>
+<div ui-grid="gridOptionsMid" class="myGrid" ui-grid-selection ></div>
 </div>
 
 <div id="Large" class="tabcontent">
   <h3>Large</h3>
   <p>Tokyo is the capital of Japan.</p>
-<div ui-grid="gridOptions" class="myGrid" ui-grid-selection ></div>
+<div ui-grid="gridOptionsLarge" class="myGrid" ui-grid-selection ></div>
 </div>
 
 

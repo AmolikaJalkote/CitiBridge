@@ -24,27 +24,76 @@
        $scope.gridOptions = {
         onRegisterApi: function (gridApi) {
           $scope.gridApi = gridApi;
-          
-	  
         },
-	rowHeight:42,
-	enableColumnMenus:false,
-	enableSorting:false,
+		rowHeight:42,
+		enableColumnMenus:false,
+		enableSorting:false,
         showGridFooter: true,
         showColumnFooter: true,
         enableFiltering: true,
      	columnDefs: colDefs,
-	enableScrollBars: false,
-	multiselect:true,
-	enableRowHeaderSelection: true
-      }; 
+		enableScrollBars: false,
+		multiselect:true,
+		enableRowHeaderSelection: true
+      };
+
+$scope.gridOptionsSmall = {
+        onRegisterApi: function (gridApi) {
+          $scope.gridApi = gridApi;
+        },
+		rowHeight:42,
+		enableColumnMenus:false,
+		enableSorting:false,
+        showGridFooter: true,
+        showColumnFooter: true,
+        enableFiltering: true,
+     	columnDefs: colDefs,
+		enableScrollBars: false,
+		multiselect:true,
+		enableRowHeaderSelection: true
+      };
+
+$scope.gridOptionsMid = {
+        onRegisterApi: function (gridApi) {
+          $scope.gridApi = gridApi; 
+        },
+		rowHeight:42,
+		enableColumnMenus:false,
+		enableSorting:false,
+        showGridFooter: true,
+        showColumnFooter: true,
+        enableFiltering: true,
+     	columnDefs: colDefs,
+		enableScrollBars: false,
+		multiselect:true,
+		enableRowHeaderSelection: true
+      };
+
+$scope.gridOptionsLarge = {
+        onRegisterApi: function (gridApi) {
+          $scope.gridApi = gridApi;
+        },
+		rowHeight:42,
+		enableColumnMenus:false,
+		enableSorting:false,
+        showGridFooter: true,
+        showColumnFooter: true,
+        enableFiltering: true,
+     	columnDefs: colDefs,
+		enableScrollBars: false,
+		multiselect:true,
+		enableRowHeaderSelection: true
+      };	  
               //Now load the data from server
                 _refreshStockData();
-              
-                // var large=["AAPL","FB","MSFT","RACE","FTS","IT","HCP","RSG","RCL","TIF","UN","BAP","HDP","MRK","PRA"];
+                //getSmallCap();
+				//getMidCap();
+				//getLargeCap();
+				
+                 var large=["AAPL","FB","MSFT","RACE","FTS","IT","HCP","RSG","RCL","TIF","UN","BAP","HDP","MRK","PRA"];
                var all=["AAPL","FB","MSFT","RACE","DDD","ASIX","BIT","MUC","CIA"];
-              // var small=["DDD","ASIX","BIT","MUC","CIA","ETO","FGP","GME","GNL","IUR","IO","HPR","KYE","LNN","NRP"];
-               //var mid=["TDY","SNX","RRC","RXN","SNDR","SCI","OA","MSA","NEU","KFY","LII","HRI","JLL","AQN","CIG","DCP","EDR"];
+               var small=["DDD","ASIX","BIT","MUC","CIA","ETO","FGP","GME","GNL","TUR","IO","KYE","LNN","NRP"];
+               var mid=["TDY","SNX","RRC","RXN","SNDR","SCI","OA","MSA","NEU","KFY","LII","HRI","JLL","AQN","CIG","DCP","EDR"];
                 
                 function _refreshStockData() {
                     $http({
@@ -53,7 +102,7 @@
                     }).then(function successCallback(response) {
                       $scope.stocks = response.data;
                       $scope.largeArr=[{}];//change to all array
-                       
+                      
                       	for(var i=0;i<all.length;i++)
                         {
                         	$scope.largeArr[i]=$scope.stocks[all[i]].quote;
@@ -64,7 +113,59 @@
                     }); 
               }//end of _refreshStockData
                 
-              
+                  $scope.getSmallCap=function(){
+                	 $http({
+                         method : 'GET',
+                         url : 'https://api.iextrading.com/1.0/stock/market/batch?symbols=DDD,ASIX,BIT,MUC,CIA,ETO,FGP,GME,GNL,TUR,IO,KYE,LNN,NRP&types=quote'
+                     }).then(function successCallback(response) {
+                       $scope.stocks = response.data;
+                       $scope.smallArr=[{}];
+                       
+                       	for(var i=0;i<small.length;i++)
+                         {
+						 $scope.smallArr[i]=$scope.stocks[small[i]].quote;
+						 //console.log($scope.smallArr[i].symbol);
+                         } 
+                        $scope.gridOptionsSmall.data=$scope.smallArr; //setting all cap data in grid
+                     }, function errorCallback(response) {
+                         console.log(response.statusText);
+                     });	
+                }//end of smallArr
+                
+                 $scope.getMidCap=function(){
+               	 $http({
+                        method : 'GET',  
+                        url : 'https://api.iextrading.com/1.0/stock/market/batch?symbols=TDY,SNX,RRC,RXN,SNDR,SCI,OA,MSA,NEU,KFY,LII,HRI,JLL,AQN,CIG,DCP,EDR&types=quote'
+                    }).then(function successCallback(response) {
+                      $scope.stocks = response.data;
+                      $scope.midArr=[{}];
+                     
+                      	for(var i=0;i<mid.length;i++)
+                        {
+                        	$scope.midArr[i]=$scope.stocks[mid[i]].quote;
+                        } 
+                       $scope.gridOptionsMid.data=$scope.midArr; //setting all cap data in grid
+                    }, function errorCallback(response) {
+                        console.log(response.statusText);
+                    });	
+               }//end of midCap
+                
+                     $scope.getLargeCap=function(){
+                  	 $http({
+                           method : 'GET',
+                           url : 'https://api.iextrading.com/1.0/stock/market/batch?symbols=AAPL,FB,MSFT,RACE,FTS,IT,HCP,RSG,RCL,TIF,UN,BAP,HDP,MRK,PRA&types=quote'
+                       }).then(function successCallback(response) {
+                         $scope.stocks = response.data;
+                         $scope.largeArr=[{}];
+                         	for(var i=0;i<large.length;i++)
+                           {
+                           	$scope.largeArr[i]=$scope.stocks[large[i]].quote;
+                           } 
+                          $scope.gridOptionsLarge.data=$scope.largeArr; //setting all cap data in grid
+                       }, function errorCallback(response) {
+                           console.log(response.statusText);
+                       });	
+                  }//end of largeCap
                 
 			});
 
